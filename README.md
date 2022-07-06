@@ -9,6 +9,7 @@
     - Up time
     - Wifi signal
     - Version
+  Grafana dashboard is in ```.github/dashboard.json```. 
 - HTTPS OTA client waiting for a new firmaware version available on this code repository. Application version is defined in ```src/esp32-cam-plus.ino``` as ```#define VERSION "X.X.X"``` and in ```ota.json``` as ```"version": "X.X.X"```. It will check periodically if a new version is available to download.
 - WiFi client
 
