@@ -2,12 +2,13 @@
 # ESP32CAM-OTA
 
 ## Functionnalities
-- Serving on ```/``` camera JPEG stream with HTTP basic authentification.
+- Serving on ```/``` camera JPEG multi-client stream (Up to 10 clients) with HTTP basic authentification.
 - Serving on ```/metrics``` ESP32-CAM metrics for Prometheus with HTTP basic authentification such as :
     - Free heap
     - Temperature
     - Up time
     - Wifi signal
+    - Version
 - HTTPS OTA client waiting for a new firmaware version available on this code repository. Application version is defined in ```src/esp32-cam-plus.ino``` as ```#define VERSION "X.X.X"``` and in ```ota.json``` as ```"version": "X.X.X"```. It will check periodically if a new version is available to download.
 - WiFi client
 
