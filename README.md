@@ -1,3 +1,4 @@
+[![PlatformIO](https://github.com/ipierre1/SECURE_CAM_OTA_AD/workflows/ESP32%20OTA%20Build/badge.svg)](https://github.com/ipierre1/SECURE_CAM_OTA_AD/actions/)
 # ESP32CAM-OTA
 
 ## Functionnalities
