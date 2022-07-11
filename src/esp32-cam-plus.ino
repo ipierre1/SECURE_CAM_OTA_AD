@@ -43,7 +43,7 @@
 
 #define SSID1 "ARTLPT59-0011 7678"
 #define PWD1 "2U!439w0"
-#define VERSION "3.0.0"
+#define VERSION "3.0.1"
 
 const char* www_username = "tsn";
 const char* www_password = "tsnpass";
@@ -347,6 +347,7 @@ void streamCB(void * pvParameters) {
   }
 }
 
+// Print metric with node_exporter format
 void setMetric(String *p, String metric, String value) {
   *p += "# " + metric + "\n";
   *p += "# TYPE " + metric + " gauge\n";
@@ -395,7 +396,8 @@ void handleMetrics()
   setMetric(&p, "esp32_available_size", String(available_size));
   setMetric(&p, "esp32_temperature", String(temperature));
   setMetric(&p, "esp32_boot_counter", String(getBootCounter()));
-  setMetric(&p, "esp32_firmware_version", String(VERSION));
+  *p += "# esp32_firmware_version " + String(VERSION) + "\n"; // Version is not a float, print it as a comment
+
 
   server.send(200, "text / plain", p);
 }
