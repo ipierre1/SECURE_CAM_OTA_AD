@@ -396,7 +396,7 @@ void handleMetrics()
   setMetric(&p, "esp32_available_size", String(available_size));
   setMetric(&p, "esp32_temperature", String(temperature));
   setMetric(&p, "esp32_boot_counter", String(getBootCounter()));
-  *p += "# esp32_firmware_version " + String(VERSION) + "\n"; // Version is not a float, print it as a comment
+  p += "# esp32_firmware_version " + String(VERSION) + "\n"; // Version is not a float, print it as a comment
 
 
   server.send(200, "text / plain", p);
