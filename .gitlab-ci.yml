@@ -1,0 +1,53 @@
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.pip-cache"
+  PLATFORMIO_CACHE_DIR: "$CI_PROJECT_DIR/.platformio-cache"
+  PACKAGE_REGISTRY_URL: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/myawesomerelease/${PACKAGE_VERSION}"
+
+stages:
+  - build
+  - release
+
+build:
+  cache:
+    paths:
+      - .pip-cache/
+      - .platformio-cache/
+  before_script:
+    - echo $CI_JOB_ID
+    - echo GE_JOB_ID=$CI_JOB_ID >> generate_executables.env
+    - pip install -U platformio
+  image: python:3.9
+  stage: build
+  script: 
+      - pio run
+      - mv .pio/build/esp32cam/firmware.bin firmware.bin
+  artifacts:
+    paths:
+      - firmware.bin
+    reports:
+      # To ensure we've access to this file in the next stage
+      dotenv: generate_executables.env
+
+release:
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  script:
+    - echo 'running release_job'
+    - echo 'Previous Job ID is printed below'
+    - echo $GE_JOB_ID
+  # Specifying that this job requires artifacts from the previous job to succeed
+  needs:
+    - job: build
+      artifacts: true
+  release:
+    name: 'Release Executables $CI_COMMIT_SHORT_SHA'
+    description: 'Created using the release-cli'
+    # tag_name is a mendatory field and can not be an empty string
+    tag_name: '$CI_COMMIT_SHORT_SHA'
+    assets:
+      links:
+        - name: 'ESP32 executable'
+          url: 'http://gitlab.XXX.com/XXX/SECURE_CAM_OTA_AD/-/jobs/${GE_JOB_ID}/artifacts/file/firmware.bin'
+  only:
+    # Can be removed if you want to trigger the pipeline for merge request or other branches
+    - main
