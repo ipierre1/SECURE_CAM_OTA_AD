@@ -19,3 +19,9 @@
 
 ## Maintainer
 @ipierre1
+
+## From Github to GitLab
+As you may see, this project included `.gitlab-ci.yml` file for GitLab pipelines. If you want to use it, you need to do some quick changes. You need to change :
+- In file `.gitlab-ci.yml` the line 50 : `http://gitlab.XXX.com/XXX/SECURE_CAM_OTA_AD` by your own Gitlab and repository. 
+- In file `esp32-cam-plus.ino` the line 426 : `https://raw.githubusercontent.com/ipierre1/SECURE_CAM_OTA_AD/main/ota.json` by the raw `ota.json` file url. 
+- In file `ota.json` the line 4 : `https://github.com/ipierre1/SECURE_CAM_OTA_AD/releases/download/latest/firmware.bin` by the firmware release url. 
